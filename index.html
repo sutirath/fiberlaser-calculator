@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เครื่องตัด Fiber Laser คำนวณพารามิเตอร์การตัด</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            font-size: 16px;
+            margin: 10px 0;
+            display: block;
+        }
+        select, input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            font-size: 18px;
+            color: #333;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>เครื่องตัด Fiber Laser คำนวณพารามิเตอร์การตัด</h1>
+
+    <label for="power">เลือกกำลังของเครื่อง (w):</label>
+    <select id="power">
+        <option value="1500">1500w</option>
+        <option value="2000">2000w</option>
+        <option value="3000">3000w</option>
+        <option value="4000">4000w</option>
+        <option value="6000">6000w</option>
+        <option value="8000">8000w</option>
+        <option value="12000">12000w</option>
+        <option value="15000">15000w</option>
+        <option value="20000">20000w</option>
+        <option value="30000">30000w</option>
+        <option value="40000">40000w</option>
+    </select>
+
+    <label for="material">เลือกประเภทวัสดุ:</label>
+    <select id="material">
+        <option value="Carbon Steel">เหล็กกล้าคาร์บอน</option>
+        <option value="Stainless Steel">สแตนเลส</option>
+        <option value="Aluminum">อะลูมิเนียม</option>
+        <option value="Brass">ทองเหลือง</option>
+        <option value="Copper">ทองแดง</option>
+    </select>
+
+    <label for="angle">กำหนดมุมตัด (องศา):</label>
+    <input type="number" id="angle" min="0" max="90" placeholder="เช่น 45" required>
+
+    <button onclick="calculateCuttingParameters()">คำนวณพารามิเตอร์การตัด</button>
+
+    <div class="result" id="result"></div>
+</div>
+
+<script>
+    // Updated Cutting Thickness Data (from the image)
+    const cuttingData = {
+        1500: { 'Carbon Steel': 14, 'Stainless Steel': 6, 'Aluminum': 4, 'Brass': 4, 'Copper': null },
+        2000: { 'Carbon Steel': 15, 'Stainless Steel': 8, 'Aluminum': 5, 'Brass': 5, 'Copper': null },
+        3000: { 'Carbon Steel': 20, 'Stainless Steel': 10, 'Aluminum': 10, 'Brass': 6, 'Copper': 2 },
+        4000: { 'Carbon Steel': 20, 'Stainless Steel': 12, 'Aluminum': 12, 'Brass': 8, 'Copper': 4 },
+        6000: { 'Carbon Steel': 25, 'Stainless Steel': 22, 'Aluminum': 22, 'Brass': 12, 'Copper': 6 },
+        8000: { 'Carbon Steel': 30, 'Stainless Steel': 25, 'Aluminum': 25, 'Brass': 12, 'Copper': 8 },
+        12000: { 'Carbon Steel': 50, 'Stainless Steel': 50, 'Aluminum': 50, 'Brass': 16, 'Copper': 10 },
+        15000: { 'Carbon Steel': 50, 'Stainless Steel': 50, 'Aluminum': 60, 'Brass': 20, 'Copper': 12 },
+        20000: { 'Carbon Steel': 60, 'Stainless Steel': 60, 'Aluminum': 60, 'Brass': 30, 'Copper': 20 },
+        30000: { 'Carbon Steel': 70, 'Stainless Steel': 80, 'Aluminum': 80, 'Brass': 40, 'Copper': 20 },
+        40000: { 'Carbon Steel': 80, 'Stainless Steel': 100, 'Aluminum': 80, 'Brass': 40, 'Copper': 20 },
+    };
+
+    function calculateCuttingParameters() {
+        const power = parseInt(document.getElementById('power').value);
+        const material = document.getElementById('material').value;
+        const angle = parseFloat(document.getElementById('angle').value);
+
+        if (isNaN(angle) || angle < 0 || angle > 90) {
+            alert("กรุณากรอกมุมตัดที่ถูกต้อง (0 - 90 องศา)");
+            return;
+        }
+
+        const materialData = cuttingData[power] && cuttingData[power][material];
+
+        if (materialData !== null && materialData !== undefined) {
+            const maxThickness = materialData;
+            const result = maxThickness * Math.cos(angle * Math.PI / 180); // คำนวณความหนาที่ตัดได้ตามมุมที่เลือก
+
+            document.getElementById('result').innerHTML = `
+                <b>ความหนาสูงสุดที่สามารถตัดได้ที่กำลัง ${power}w กับวัสดุ ${material}:</b> ${maxThickness} mm <br>
+                <b>ความหนาที่สามารถตัดได้ในมุม ${angle}°:</b> ${result.toFixed(2)} mm
+            `;
+        } else {
+            document.getElementById('result').innerText = "ข้อมูลไม่พบสำหรับกำลังเครื่องและวัสดุที่เลือก";
+        }
+    }
+</script>
+
+</body>
+</html>
