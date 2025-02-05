@@ -95,7 +95,7 @@
 
     <!-- Tab content for Plate -->
     <div id="plate" class="tab-content active">
-        <label for="power-plate">เลือกกำลังของเครื่อง (w) สำหรับแผ่นเหล็ก:</label>
+        <label for="power-plate">เลือกกำลังของเครื่อง (w) สำหรับแผ่น:</label>
         <select id="power-plate">
             <option value="1500">1500w</option>
             <option value="2000">2000w</option>
@@ -110,9 +110,9 @@
             <option value="40000">40000w</option>
         </select>
 
-        <label for="material-plate">เลือกประเภทวัสดุสำหรับแผ่นเหล็ก:</label>
+        <label for="material-plate">เลือกประเภทวัสดุสำหรับแผ่น:</label>
         <select id="material-plate">
-            <option value="Carbon Steel">เหล็กกล้าคาร์บอน</option>
+            <option value="Carbon Steel">กล้าคาร์บอน</option>
             <option value="Stainless Steel">สแตนเลส</option>
             <option value="Aluminum">อะลูมิเนียม</option>
             <option value="Brass">ทองเหลือง</option>
@@ -122,7 +122,7 @@
         <label for="angle-plate">กำหนดมุมตัด (องศา):</label>
         <input type="number" id="angle-plate" min="0" max="90" placeholder="เช่น 45" required>
 
-        <button onclick="calculateCuttingParameters('plate')">คำนวณพารามิเตอร์การตัดแผ่นเหล็ก</button>
+        <button onclick="calculateCuttingParameters('plate')">คำนวณพารามิเตอร์การตัดแผ่น</button>
 
         <div class="result" id="result-plate"></div>
     </div>
@@ -143,13 +143,13 @@
 
         <label for="material-tube">เลือกประเภทวัสดุสำหรับท่อ:</label>
         <select id="material-tube">
-            <option value="Carbon Steel">เหล็กกล้าคาร์บอน</option>
+            <option value="Carbon Steel">กล้าคาร์บอน</option>
             <option value="Stainless Steel">สแตนเลส</option>
             <option value="Aluminum">อะลูมิเนียม</option>
             <option value="Brass">ทองเหลือง</option>
         </select>
 
-        <label for="angle-tube">กำหนดมุมตัด (องศ) สำหรับท่อ:</label>
+        <label for="angle-tube">กำหนดมุมตัด (องศา) สำหรับท่อ:</label>
         <input type="number" id="angle-tube" min="0" max="90" placeholder="เช่น 45" required>
 
         <button onclick="calculateCuttingParameters('tube')">คำนวณพารามิเตอร์การตัดท่อ</button>
